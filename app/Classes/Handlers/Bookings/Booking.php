@@ -4,33 +4,17 @@ namespace App\Classes\Handlers\Bookings;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Date;
 
 //This class validates given
 class Booking {
-    // protected $numOfGuests;
-    // protected $dateOfBooking;
-
-    // public function __construct($numOfGuests, $dateOfBooking)
-    // {
-    //     $this->numOfGuests = $numOfGuests;
-    //     $this->dateOfBooking = $dateOfBooking;
-    // }
-
-    public function getBooking()
+    public function validate (Request $r)
     {
-        $rNum = Cache::get('numOfGuests');
-        $rDate = Cache::get('dateOfBooking');
-        return [$rNum, $rDate];
-    }
-    public function handler(Request $r){
         $r->validate([
-            'numOfGuests' => 'required|max:8',
-            'dateOfBooking' => 'required'
+            'dateOfBooking' => 'required|date_format:Y-m-d',
+            'numOfGuests' => 'required|integer|min:1|max:8'
+        ],[
+            'date.date_format' => 'Invalid Date format, Please use YYYY-MM-DD'
         ]);
-        new Booking;
-        Cache::put('numOfGuests', $r->numOfGuests, $seconds = 100);
-        Cache::put('dateOfBooking', $r->dateOfBooking, $seconds = 100);
-        echo("Successfully Validated!");
     }
-
 };
