@@ -3,20 +3,25 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+
 use App\Classes\Handlers\Bookings\Booking;
+use App\Classes\Handlers\Bookings\CarbonValidation;
+use App\Classes\Handlers\Bookings\Validator;
 
 
 Route::post('/bookings/create', function (Request $r) {
     $numOfGuests = $r->get('numOfGuests');
     $dateOfBooking = $r->get('dateOfBooking');
-    $validator = new Booking();
-    $validator->validate($r);
-    Cache::put($dateOfBooking, $numOfGuests, $seconds = 100);
+    $c = new CarbonValidation;
+    $b = new Booking($dateOfBooking, $numOfGuests);
+    $b->check($r);
+    $c->validation($r);
+    $b->store($dateOfBooking, $numOfGuests);
     return response()->json(['success' => true]);
 });
 
 Route::get('/bookings/read/{dateOfBooking}', function ($dateOfBooking) {
-    echo "Grabbing your booking!";
+    echo "Grabbing your booking";
     $numOfGuests = Cache::get($dateOfBooking);
     if(!$numOfGuests){
         return response()->json(['error' => 'Booking Not found']);
