@@ -15,15 +15,6 @@ class Booking {
         $this->$dateOfBooking = $dateOfBooking;
        $this->$numOfGuests = $numOfGuests;
     }
-    public function check (Request $r)
-    {
-        $r->validate([
-            'dateOfBooking' => 'required|date|date_format:m-d-Y',
-            'numOfGuests' => 'required|integer|min:1|max:8',
-        ],[
-            'date.date_format' => 'Invalid Date format, Please use YYYY-MM-DD'
-        ]);
-    }
 
     public function store($dateOfBooking, $numOfGuests)
     {

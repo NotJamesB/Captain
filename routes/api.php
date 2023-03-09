@@ -14,10 +14,12 @@ Route::post('/bookings/create', function (Request $r) {
     $dateOfBooking = $r->get('dateOfBooking');
     $c = new CarbonValidation;
     $b = new Booking($dateOfBooking, $numOfGuests);
-    $b->check($r);
-    $c->validation($r);
-    $b->store($dateOfBooking, $numOfGuests);
-    return response()->json(['success' => true]);
+    if($c->validateBooking($r) == false){
+        return null;
+    }
+        $b->store($dateOfBooking, $numOfGuests);
+        return response()->json(['success' => true]);
+
 });
 
 Route::get('/bookings/read/{dateOfBooking}', function ($dateOfBooking) {
