@@ -14,18 +14,17 @@ Route::post('/bookings/create', function (Request $r) {
     $dateOfBooking = $r->get('dateOfBooking');
     $c = new CarbonValidation;
     $b = new Booking($dateOfBooking, $numOfGuests);
-    if($c->validateBooking($r) == false){
+    if ($c->validateBooking($r) == false) {
         return null;
     }
-        $b->store($dateOfBooking, $numOfGuests);
-        return response()->json(['success' => true]);
-
+    $b->store($dateOfBooking, $numOfGuests);
+    return response()->json(['success' => true]);
 });
 
 Route::get('/bookings/read/{dateOfBooking}', function ($dateOfBooking) {
     echo "Grabbing your booking";
     $numOfGuests = Cache::get($dateOfBooking);
-    if(!$numOfGuests){
+    if (!$numOfGuests) {
         return response()->json(['error' => 'Booking Not found']);
     }
     return [$dateOfBooking, $numOfGuests];

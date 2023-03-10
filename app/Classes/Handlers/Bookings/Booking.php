@@ -9,16 +9,16 @@ use App\Classes\Handlers\Bookings\Validator;
 
 
 //This class validates given
-class Booking {
+class Booking
+{
     public function __construct(String $dateOfBooking, Int $numOfGuests)
     {
         $this->$dateOfBooking = $dateOfBooking;
-       $this->$numOfGuests = $numOfGuests;
+        $this->$numOfGuests = $numOfGuests;
     }
 
     public function store($dateOfBooking, $numOfGuests)
     {
         Cache::put($dateOfBooking, $numOfGuests, $seconds = 1000);
     }
-    
 };

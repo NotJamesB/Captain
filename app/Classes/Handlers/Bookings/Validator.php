@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 
-class Validator{
+class Validator
+{
 
     // public function check (Request $r)
     // {
@@ -18,23 +19,23 @@ class Validator{
     //     ]);
     // }
 
-//     public function validation(Request $r){
-//         $dateOfBooking = Carbon::parse($r['dateOfBooking']);
-//         if(!$dateOfBooking->isWeekday() || ! $dateOfBooking->isBetween(Carbon::parse('June 1'), Carbon::parse('August 31'))){
-//             return false;
-//         }
+    //     public function validation(Request $r){
+    //         $dateOfBooking = Carbon::parse($r['dateOfBooking']);
+    //         if(!$dateOfBooking->isWeekday() || ! $dateOfBooking->isBetween(Carbon::parse('June 1'), Carbon::parse('August 31'))){
+    //             return false;
+    //         }
 
-//         $now = Carbon::now();
-//         $currentYear = $now->year;
-//         $nextYear = $currentYear +1;
-//         $latestDate = Carbon::parse("August 31, $nextYear");
-//         if($dateOfBooking->greaterThan($latestDate)){
-//             return false;
-//         }
+    //         $now = Carbon::now();
+    //         $currentYear = $now->year;
+    //         $nextYear = $currentYear +1;
+    //         $latestDate = Carbon::parse("August 31, $nextYear");
+    //         if($dateOfBooking->greaterThan($latestDate)){
+    //             return false;
+    //         }
 
-//         if($dateOfBooking->isToday()){
-//             return false;
-//         }
-//     }
+    //         if($dateOfBooking->isToday()){
+    //             return false;
+    //         }
+    //     }
 
 }
