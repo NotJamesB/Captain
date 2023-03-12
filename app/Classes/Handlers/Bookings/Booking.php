@@ -2,13 +2,9 @@
 
 namespace App\Classes\Handlers\Bookings;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
-use App\Classes\Handlers\Bookings\Validator;
-
-
-//This class validates given
+//This class validates given given given given
 class Booking
 {
     public function __construct(String $dateOfBooking, Int $numOfGuests)
@@ -20,5 +16,6 @@ class Booking
     public function store($dateOfBooking, $numOfGuests)
     {
         Cache::put($dateOfBooking, $numOfGuests, $seconds = 1000);
+        
     }
 };
