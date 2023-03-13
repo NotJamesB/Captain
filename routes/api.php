@@ -6,32 +6,48 @@ use Illuminate\Support\Facades\Route;
 
 use App\Classes\Handlers\Bookings\Booking;
 use App\Classes\Handlers\Bookings\CarbonValidation;
+use App\Classes\Handlers\Bookings\BookingGetter;
 
-Route::post('/bookings/create', function (Request $r) 
-{
-    $numOfGuests = $r->get('numOfGuests');
-    $dateOfBooking = $r->get('dateOfBooking');
+Route::post('/bookings/create', function ( Request $r ) 
+    {
+    $numOfGuests = $r->get( 'numOfGuests' );
+    $dateOfBooking = $r->get( 'dateOfBooking' );
 
     $c = new CarbonValidation;
-    if ($c->validateBooking($r) == false) {
+    if ( $c->validateBooking($r) == false ) 
+    {
         return null;
     }
 
-    $b = new Booking($dateOfBooking, $numOfGuests);
-    $b->store($dateOfBooking, $numOfGuests);
+    $b = new Booking( $dateOfBooking, $numOfGuests );
+    $b->store( $dateOfBooking, $numOfGuests );
 
-    return response()->json(['success' => true]);
+    return response()->json( ['success' => true] );
 });
 
-Route::get('/bookings/read/{dateOfBooking}', function ($dateOfBooking) 
-{
+Route::get( '/bookings/read/{dateOfBooking}', function ( $dateOfBooking ) {
     echo "Grabbing your booking";
-    $numOfGuests = Cache::get('$dateOfBooking');
 
-    if (!$numOfGuests) 
+    $numOfGuests = Cache::get( $dateOfBooking );
+
+    if (  !$numOfGuests ) 
     {
-        return response()->json(['error' => 'Booking Not found']);
+        return response()->json( ['error' => 'Booking Not found'] );
     }
 
-    return [$dateOfBooking, $numOfGuests];
+    return [ $dateOfBooking, $numOfGuests ];
 });
+
+// Route::get( '/bookings/read', function () 
+//     {
+//     echo "Grabbing your booking";
+
+//     $b = new BookingGetter;
+//     $allBookings = $b->getAllBookings();
+
+//     if ( !$allBookings ) {
+//         return response()->json(['error' => 'Booking Not found']);
+//     }
+
+//     return response()->json( $allBookings );
+// });

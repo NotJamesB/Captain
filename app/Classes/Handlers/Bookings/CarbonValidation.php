@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CarbonValidation extends \DateTime
 {
-    public function validateBooking(Request $r)
+    public function validateBooking( Request $r )
     {
         $r->validate([
             'dateOfBooking' => 'required|date|date_format:Y-m-d',
@@ -16,19 +16,21 @@ class CarbonValidation extends \DateTime
             'date.date_format' => 'Invalid Date format, Please use YYYY-MM-DD'
         ]);
 
-        $dateOfBooking = $r->get('dateOfBooking');
-        $numOfGuests = $r->get('numOfGuests');
+        $dateOfBooking = $r->get( 'dateOfBooking' );
+        $numOfGuests = $r->get( 'numOfGuests' );
 
-        $date = Carbon::parse($dateOfBooking);
+        $date = Carbon::parse( $dateOfBooking );
         $isToday = $date->isToday();
 
-        if ($isToday || !$date->isWeekday()) {
+        if ($isToday || !$date->isWeekday()) 
+        {
             print "Bookings can only be made on week days and Cannot be made on the same date of booking.";
 
             return false;
         }
 
-        if (!$date->isBetween(Carbon::parse('June 1'), Carbon::parse('August 31'))) {
+        if ( !$date->isBetween( Carbon::parse( 'June 1' ), Carbon::parse( 'August 31' ) ) ) 
+        {
             print "Date MUST be between June 1 and August 31.";
 
             return false;
