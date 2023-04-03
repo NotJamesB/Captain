@@ -28,8 +28,7 @@ Route::get('/bookings/read', function ()
     $b = new Booking;
 
     $r = $b->getBookings();
-    if (!$r) 
-    {
+    if (!$r) {
         return response()->json(['error' => 'Booking Not found']);
     }
 
