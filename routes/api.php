@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Classes\Handlers\Bookings\Booking;
 use App\Classes\Handlers\Bookings\CarbonValidation;
 
-Route::post('/bookings/create', function (Request $r) {
+Route::post('/bookings/create', function (Request $r) 
+{
     $numOfGuests = $r->get('numOfGuests');
     $dateOfBooking = $r->get('dateOfBooking');
 
@@ -21,12 +22,14 @@ Route::post('/bookings/create', function (Request $r) {
     return response()->json(['success' => true]);
 });
 
-Route::get('/bookings/read', function () {
+Route::get('/bookings/read', function () 
+{
 
     $b = new Booking;
     $r = $b->getBookings();
     if (!$r) {
         return response()->json(['error' => 'Booking Not found']);
     }
+
     return $r;
 });
