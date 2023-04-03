@@ -38,7 +38,7 @@ class CarbonValidation extends \DateTime
             return false;
         }
 
-        if ($numOfGuests >= 9) 
+        if ($numOfGuests >= 9 || $numOfGuests <= 0) 
         {
             print "The maximum amount of guests per day is 8";
 
