@@ -4,17 +4,18 @@ namespace App\Classes\Handlers\Bookings;
 
 use Illuminate\Support\Facades\Cache;
 
-//This class validates given given given given
 class Booking
 {
-    public function __construct( String $dateOfBooking, Int $numOfGuests )
+
+    public function store($dateOfBooking, $numOfGuests)
     {
-        $this->$dateOfBooking = $dateOfBooking;
-        $this->$numOfGuests = $numOfGuests;
+        $bookings = Cache::tags('booking')->get('bookings') ?? [];
+        $bookings[$dateOfBooking] = $numOfGuests;
+        Cache::tags('booking')->put('bookings', $bookings);
     }
 
-    public function store( $dateOfBooking, $numOfGuests )
+    public function getBookings()
     {
-        Cache::put( 'booking_' . $dateOfBooking, $numOfGuests, $seconds = 1000 );
+        return Cache::tags('booking')->get('bookings') ?? [];
     }
 };
