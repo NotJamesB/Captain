@@ -12,9 +12,8 @@ class CarbonValidation extends \DateTime
     {
         $r->validate([
             'dateOfBooking' => 'required|date|date_format:Y-m-d',
-            'numOfGuests' => 'required|integer|min:1|max:8',
         ], [
-            'date.date_format' => 'Invalid Date format, Please use YYYY-MM-DD'
+            'date.date_format' => 'Invalid Date format, Please use YYYY-MM-DD',
         ]);
 
         $dateOfBooking = $r->get('dateOfBooking');
@@ -30,9 +29,31 @@ class CarbonValidation extends \DateTime
             return false;
         }
 
-        if (!$date->isBetween(Carbon::parse('June 1'), Carbon::parse('August 31'))) 
+        $bookings = Cache::tags('booking')->get('bookings');
+
+        if (isset($bookings[$dateOfBooking])) 
         {
-            print "Date MUST be between June 1 and August 31.";
+            print "A booking already exists on this date.";
+
+            return false;
+        }
+
+        if ($numOfGuests >= 9) 
+        {
+            print "The maximum amount of guests per day is 8";
+
+            return false;
+        }
+
+        $currentYearStart = Carbon::parse('June 1st 2023');
+        $currentYearEnd = Carbon::parse('August 31st 2023');
+        $nextYearStart = Carbon::parse('June 1st 2024');
+        $nextYearEnd = Carbon::parse('August 31st 2024');
+
+        if (!$date->isBetween($currentYearStart, $currentYearEnd) && !$date->isBetween($nextYearStart, $nextYearEnd)) 
+        {
+            print "Date MUST be between June 1 and August 31 of The current or next year.";
+
             return false;
         }
 
